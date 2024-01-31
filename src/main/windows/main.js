@@ -146,9 +146,7 @@ contextMenu({
         nodeIntegrationInWorker: false,
         experimentalFeatures: true,
         devTools: true
-      },
-      darkTheme: store.get('options.useLightMode') ? false : true,
-      vibrancy: store.get('options.useLightMode') ? 'light' : 'ultra-dark'
+      }
       });
       const vidURL = parameters.srcURL;
       newWin.loadURL(vidURL);
@@ -169,9 +167,7 @@ contextMenu({
         nodeIntegrationInWorker: false,
         experimentalFeatures: true,
         devTools: true
-      },
-      darkTheme: store.get('options.useLightMode') ? false : true,
-      vibrancy: store.get('options.useLightMode') ? 'light' : 'ultra-dark'
+      }
       });
       const toURL = parameters.linkURL;
       newWin.loadURL(toURL);
