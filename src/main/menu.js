@@ -170,7 +170,7 @@ function getMenuTemplate () {
           type: 'separator'
         },
         {
-          label: 'Go Back',
+          label: 'Escape Back',
           accelerator: 'Esc',
           click: () => windows.main.dispatch('escapeBack')
         },
@@ -178,23 +178,18 @@ function getMenuTemplate () {
           type: 'separator'
         },
         {
-          label: 'Developer',
-          submenu: [
-            {
-              label: 'Developer Tools',
-              accelerator: process.platform === 'darwin'
-                ? 'Alt+Command+I'
-                : 'Ctrl+Shift+I',
-              click: () => windows.main.toggleDevTools()
-            },
-            {
-              label: 'Show WebTorrent Process',
-              accelerator: process.platform === 'darwin'
-                ? 'Alt+Command+P'
-                : 'Ctrl+Shift+P',
-              click: () => windows.webtorrent.toggleDevTools()
-            }
-          ]
+          label: 'Go Back',
+          accelerator: 'Alt+Left',
+          click(item, focusedWindow) {
+            if (focusedWindow) focusedWindow.webContents.goBack()
+          }
+        },
+        {
+          label: 'Go Forward',
+          accelerator: 'Alt+Right',
+          click(item, focusedWindow) {
+            if (focusedWindow) focusedWindow.webContents.goForward()
+          }
         }
       ]
     },
@@ -303,6 +298,41 @@ function getMenuTemplate () {
       ]
     },
     {
+      label: 'Developer',
+      submenu: [
+        {
+          label: 'Developer Tools',
+          accelerator: process.platform === 'darwin'
+            ? 'Alt+Command+I'
+            : 'Ctrl+Shift+I',
+          click: () => windows.main.toggleDevTools()
+        },
+        {
+          label: 'Open Electron DevTools',
+          accelerator: process.platform === 'darwin' ? 'Cmd+Shift+F12' : 'F12',
+          click(item, focusedWindow) {
+            focusedWindow.openDevTools({ mode: 'detach' });
+          }
+        },
+        {
+          label: 'Show WebTorrent Process',
+          accelerator: process.platform === 'darwin'
+            ? 'Alt+Command+P'
+            : 'Ctrl+Shift+P',
+          click: () => windows.webtorrent.toggleDevTools()
+        },
+        {
+          label: 'Open chrome://gpu',
+          accelerator: 'CmdorCtrl+Alt+G',
+          click() {
+            const gpuWindow = new BrowserWindow({width: 900, height: 700, title: "GPU Internals"});
+            console.log('Opening chrome://gpu');
+            gpuWindow.loadURL('chrome://gpu');
+          }
+        }
+      ]
+    },
+    {
       label: 'Help',
       role: 'help',
       submenu: [
@@ -354,7 +384,8 @@ function getMenuTemplate () {
       label: config.APP_NAME,
       submenu: [
         {
-          role: 'about'
+          role: 'about',
+          click: () => windows.about.init()
         },
         {
           type: 'separator'
@@ -450,21 +481,13 @@ function getMenuTemplate () {
       })
 
     // Help menu (Windows, Linux)
-    template[5].submenu.push(
+    template[6].submenu.push(
       {
         type: 'separator'
       },
-        {
-        label: 'Open chrome://gpu',
-        accelerator: 'CmdorCtrl+Alt+G',
-        click() {
-          const gpuWindow = new BrowserWindow({width: 900, height: 700, title: "GPU Internals"});
-          console.log('Opening chrome://gpu');
-          gpuWindow.loadURL('chrome://gpu');
-        }
-      },
       {
         label: 'About ' + config.APP_NAME,
+        accelerator: 'CmdorCtrl+Alt+A',
         click: () => windows.about.init()
       }
     )

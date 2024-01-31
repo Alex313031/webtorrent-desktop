@@ -15,6 +15,7 @@ const main = module.exports = {
 }
 
 const { app, BrowserWindow, screen } = require('electron')
+const contextMenu = require('electron-context-menu');
 const debounce = require('debounce')
 
 const config = require('../../config')
@@ -115,6 +116,68 @@ function init (state, options) {
     }
   })
 }
+
+contextMenu({
+  // Chromium context menu defaults
+  showSelectAll: true,
+  showCopyImage: true,
+  showCopyImageAddress: true,
+  showSaveImageAs: true,
+  showCopyVideoAddress: true,
+  showSaveVideoAs: true,
+  showCopyLink: true,
+  showSaveLinkAs: true,
+  showInspectElement: true,
+  showLookUpSelection: true,
+  showSearchWithGoogle: true,
+  prepend: (defaultActions, parameters) => [
+  {
+    label: 'Open Video in New Window',
+    // Only show it when right-clicking video
+    visible: parameters.mediaType === 'video',
+    click: () => {
+      const newWin = new BrowserWindow({
+      title: 'New Window',
+      width: 1024,
+      height: 768,
+      useContentSize: true,
+      webPreferences: {
+        nodeIntegration: false,
+        nodeIntegrationInWorker: false,
+        experimentalFeatures: true,
+        devTools: true
+      },
+      darkTheme: store.get('options.useLightMode') ? false : true,
+      vibrancy: store.get('options.useLightMode') ? 'light' : 'ultra-dark'
+      });
+      const vidURL = parameters.srcURL;
+      newWin.loadURL(vidURL);
+    }
+  },
+  {
+    label: 'Open Link in New Window',
+    // Only show it when right-clicking a link
+    visible: parameters.linkURL.trim().length > 0,
+    click: () => {
+      const newWin = new BrowserWindow({
+      title: 'New Window',
+      width: 1024,
+      height: 768,
+      useContentSize: true,
+      webPreferences: {
+        nodeIntegration: false,
+        nodeIntegrationInWorker: false,
+        experimentalFeatures: true,
+        devTools: true
+      },
+      darkTheme: store.get('options.useLightMode') ? false : true,
+      vibrancy: store.get('options.useLightMode') ? 'light' : 'ultra-dark'
+      });
+      const toURL = parameters.linkURL;
+      newWin.loadURL(toURL);
+    }
+  }]
+});
 
 function dispatch (...args) {
   send('dispatch', ...args)
