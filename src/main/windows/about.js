@@ -28,8 +28,10 @@ function init () {
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false,
-      sandbox: false,
+      enableBlinkFeatures: 'AudioVideoTracks',
+      enableRemoteModule: true,
       backgroundThrottling: false,
+      sandbox: false,
       devTools: true,
       experimentalFeatures: true,
       webviewTag: true,
