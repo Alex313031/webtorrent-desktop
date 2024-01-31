@@ -5,6 +5,7 @@ const about = module.exports = {
 
 const config = require('../../config')
 const { BrowserWindow } = require('electron')
+const path = require('path')
 
 function init () {
   if (about.win) {
@@ -19,7 +20,7 @@ function init () {
     icon: getIconPath(),
     maximizable: false,
     minimizable: false,
-    resizable: false,
+    resizable: true,
     show: false,
     skipTaskbar: true,
     title: 'About ' + config.APP_WINDOW_TITLE,
@@ -27,9 +28,12 @@ function init () {
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false,
-      enableBlinkFeatures: 'AudioVideoTracks',
-      enableRemoteModule: true,
-      backgroundThrottling: false
+      sandbox: false,
+      backgroundThrottling: false,
+      devTools: true,
+      experimentalFeatures: true,
+      webviewTag: true,
+      preload: path.join(__dirname, 'preload.js')
     },
     width: 300
   })

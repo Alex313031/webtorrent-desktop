@@ -23,6 +23,11 @@ let argv = sliceArgv(process.argv)
 
 // allow electron/chromium to play startup sounds (without user interaction)
 app.commandLine.appendSwitch('autoplay-policy', 'no-user-gesture-required')
+app.commandLine.appendSwitch('enable-local-file-accesses')
+app.commandLine.appendSwitch('enable-quic')
+app.commandLine.appendSwitch('enable-ui-devtools')
+app.commandLine.appendSwitch('ignore-gpu-blocklist')
+app.commandLine.appendSwitch('enable-gpu-rasterization')
 
 // Start the app without showing the main window when auto launching on login
 // (On Windows and Linux, we get a flag. On MacOS, we get special API.)

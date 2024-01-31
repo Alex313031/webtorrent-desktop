@@ -8,7 +8,7 @@ module.exports = {
   onToggleFullScreen
 }
 
-const { app, Menu } = require('electron')
+const { app, Menu, BrowserWindow, webContents, Dialog } = require('electron')
 
 const config = require('../config')
 const windows = require('./windows')
@@ -110,7 +110,13 @@ function getMenuTemplate () {
           type: 'separator'
         },
         {
-          role: 'close'
+          role: 'close',
+          label: 'Close Window'
+        },
+        {
+          label: 'Quit',
+          accelerator: 'CmdOrCtrl+Q',
+          click: () => app.quit()
         }
       ]
     },
@@ -448,20 +454,20 @@ function getMenuTemplate () {
       {
         type: 'separator'
       },
+        {
+        label: 'Open chrome://gpu',
+        accelerator: 'CmdorCtrl+Alt+G',
+        click() {
+          const gpuWindow = new BrowserWindow({width: 900, height: 700, title: "GPU Internals"});
+          console.log('Opening chrome://gpu');
+          gpuWindow.loadURL('chrome://gpu');
+        }
+      },
       {
         label: 'About ' + config.APP_NAME,
         click: () => windows.about.init()
       }
     )
-  }
-  // Add "File > Quit" menu item so Linux distros where the system tray icon is
-  // missing will have a way to quit the app.
-  if (process.platform === 'linux') {
-    // File menu (Linux)
-    template[0].submenu.push({
-      label: 'Quit',
-      click: () => app.quit()
-    })
   }
 
   return template

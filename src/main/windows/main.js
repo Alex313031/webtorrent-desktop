@@ -45,7 +45,10 @@ function init (state, options) {
       contextIsolation: false,
       enableBlinkFeatures: 'AudioVideoTracks',
       enableRemoteModule: true,
-      backgroundThrottling: false
+      backgroundThrottling: false,
+      devTools: true,
+      experimentalFeatures: true,
+      webviewTag: true
     },
     x: initialBounds.x,
     y: initialBounds.y

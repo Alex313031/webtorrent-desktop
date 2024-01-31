@@ -20,6 +20,9 @@
         font-size: 0.9em;
         -webkit-user-select: text;
       }
+      .ver {
+        font-weight: bold;
+      }
       p {
         font-size: 0.8em;
         -webkit-user-select: text;
@@ -30,10 +33,24 @@
     <img src="../static/WebTorrent.png">
     <h1>WebTorrent</h1>
     <p>
-      Version <script>document.write(require('../package.json').version)</script>
-      (<script>document.write(require('webtorrent/package.json').version)</script>)
+      App Version: <b>v.<script>document.write(require('../package.json').version)</script></b>
+      (<script>document.write(process.arch)</script>)
+    </p>
+    <p>
+      libwebtorrent: <b>v.<script>document.write(require('webtorrent/package.json').version)</script></b>
       (<script>document.write(process.arch)</script>)
     </p>
     <p><script>document.write(require('../build/config').APP_COPYRIGHT)</script></p>
+    <p>
+      <a href="https://www.electronjs.org/" target="_blank" rel="noopener">Electron</a>:&nbsp;<span class="ver" id="electron-version"></span>
+    <br>
+      <a href="https://www.chromium.org/" target="_blank" rel="noopener">Chromium</a>:&nbsp;<span class="ver" id="chrome-version"></span>
+    <br>
+      <a href="https://nodejs.org/" target="_blank" rel="noopener">Node.js</a>:&nbsp;<span class="ver" id="node-version"></span>
+    <br>
+      <a href="https://v8.dev/" target="_blank" rel="noopener">V8</a>:&nbsp;<span class="ver" id="v8-version"></span>
+    <br>
+      <a>OS</a>:&nbsp;<span class="ver" id="os-type"></span><span class="ver" id="os-version"></span>
+    </p>
   </body>
 </html>

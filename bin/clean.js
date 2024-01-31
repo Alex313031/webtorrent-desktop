@@ -16,6 +16,7 @@ const handlers = require('../src/main/handlers')
 // First, remove generated files
 rimraf.sync('build/')
 rimraf.sync('dist/')
+rimraf.sync('node_modules')
 
 // Remove any saved configuration
 rimraf.sync(config.CONFIG_PATH)

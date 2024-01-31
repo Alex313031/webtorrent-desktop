@@ -55,7 +55,7 @@ class Header extends React.Component {
     return (
       <i
         className='icon add'
-        title='Add torrent'
+        title='Add Torrent'
         onClick={dispatcher('openFiles')}
         role='button'
       >

@@ -29,7 +29,10 @@ function init () {
       contextIsolation: false,
       enableBlinkFeatures: 'AudioVideoTracks',
       enableRemoteModule: true,
-      backgroundThrottling: false
+      backgroundThrottling: false,
+      devTools: true,
+      experimentalFeatures: true,
+      webviewTag: true
     },
     width: 150
   })
